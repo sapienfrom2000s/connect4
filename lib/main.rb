@@ -1,4 +1,4 @@
-require_relative 'gameplay.rb'
+require_relative './gameplay.rb'
 
 game = Gameplay.new
 board = game.setup

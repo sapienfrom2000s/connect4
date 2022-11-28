@@ -1,6 +1,5 @@
 class Mesh
 
-
     def initialize(grid)
         @grid = grid
     end
