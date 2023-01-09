@@ -32,7 +32,8 @@ class Gameplay
     disc = player.data[:disc]
     username = player.data[:username]
     
-    if (board.horizontal_clearance?(move,disc))||(board.vertical_clearance?(move,disc))||(board.forward_slash_clearance?(move,disc))||(board.backward_slash_clearance?(move,disc))
+    if (board.horizontal_clearance?)||(board.vertical_clearance?)||\
+      (board.forward_slash_clearance?)||(board.backward_slash_clearance?)
       winning_message(username)
       true
     end
@@ -46,7 +47,6 @@ class Gameplay
 
     (1..21).each do |i|
       (0..1).each do |j|
-        # binding.pry
         move = play_order[j].move(board)
         print board.punch
         exit if win?(move,board,play_order[j]) == true
