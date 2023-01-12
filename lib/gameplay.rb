@@ -1,42 +1,36 @@
 # frozen_string_literal: true
 require 'pry-byebug'
 
-require_relative './instructions.rb'
-require_relative './player.rb'
-require_relative './computer.rb'
-require_relative './board.rb'
+require_relative 'instructions.rb'
 
 class Gameplay
-  attr_reader :board
+  attr_reader :board, :win_checker
 
   include Instructions
 
-  def toss(human,machine)
-    arr = [human,machine]
-    rand(1..8).times{ arr.shuffle! }
-    toss_winner(arr[0].data)
-    arr
+  def initialize(board, win_checker)
+    @board = board
+    @win_checker = win_checker
+    welcome_message
   end
 
-  def setup
-    welcome_message
-    board = Board.new
-    board.create_coordinates
-    board
+  def toss(human,machine)
+    players = [human,machine].shuffle
+    toss_winner(players.first.data)
+    puts players.first.data
+    players
   end
 
   def win?(move,board,player)
     disc = player.data[:disc]
     username = player.data[:username]
-    if board.winning_combination?
+    if win_checker.win?
       winning_message(username)
       true
     end
   end
 
-  def play(board)
-    human = Player.new
-    machine = Computer.new
+  def play(human, machine)
     play_order = toss(human, machine)
     print board.punch
 
