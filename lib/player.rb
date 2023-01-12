@@ -20,7 +20,12 @@ class Player
         '⬤'.colorize(:green)
     end
 
-    def column_input(board)
+    def update_board(board, move, disc)
+        board.update_move(move)
+        board.update_disc(disc)
+    end
+
+    def move_input(board)
         loop do
             puts('Please enter a valid move')
             input = gets.chomp
@@ -31,7 +36,8 @@ class Player
     end
     
     def move(board)
-        input = column_input(board)
-        coordinate = board.drop_the_disc('⬤'.colorize(:green),input.to_i)
+        input = move_input(board)
+        update_board(board,input.to_i,'⬤'.colorize(:green))
+        coordinate = board.drop_the_disc
     end
 end
