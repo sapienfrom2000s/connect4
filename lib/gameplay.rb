@@ -4,11 +4,10 @@ require 'pry-byebug'
 require_relative './instructions.rb'
 require_relative './player.rb'
 require_relative './computer.rb'
-require_relative './mesh.rb'
 require_relative './board.rb'
 
 class Gameplay
-  attr_reader :grid
+  attr_reader :board
 
   include Instructions
 
@@ -23,17 +22,13 @@ class Gameplay
     welcome_message
     board = Board.new
     board.create_coordinates
-    mesh = Mesh.new(board.grid)
-    mesh.create
     board
   end
 
   def win?(move,board,player)
     disc = player.data[:disc]
     username = player.data[:username]
-    
-    if (board.horizontal_clearance?)||(board.vertical_clearance?)||\
-      (board.forward_slash_clearance?)||(board.backward_slash_clearance?)
+    if board.winning_combination?
       winning_message(username)
       true
     end
